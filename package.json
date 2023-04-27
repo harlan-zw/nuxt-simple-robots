@@ -1,8 +1,9 @@
 {
   "name": "nuxt-simple-robots",
   "type": "module",
-  "version": "1.0.5",
-  "packageManager": "pnpm@8.3.1",
+  "version": "2.2.0",
+  "packageManager": "pnpm@8.1.0",
+  "description": "Simply manage the robots crawling your Nuxt 3 app.",
   "license": "MIT",
   "funding": "https://github.com/sponsors/harlan-zw",
   "homepage": "https://github.com/harlan-zw/nuxt-simple-robots#readme",
@@ -32,22 +33,22 @@
     "dev:build": "nuxi build .playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare .playground",
     "release": "bumpp package.json --commit --push --tag",
-    "test": "pnpm lint"
+    "test": "pnpm lint && vitest"
   },
   "dependencies": {
-    "@nuxt/kit": "3.4.2",
+    "@nuxt/kit": "^3.4.1",
     "pathe": "^1.1.0",
     "ufo": "^1.1.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.38.5",
+    "@antfu/eslint-config": "^0.38.4",
     "@nuxt/module-builder": "^0.3.0",
-    "@nuxt/test-utils": "3.4.2",
+    "@nuxt/test-utils": "3.4.1",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "bumpp": "^9.1.0",
-    "eslint": "8.39.0",
+    "eslint": "8.38.0",
     "execa": "^7.1.1",
-    "nuxt": "^3.4.2",
+    "nuxt": "^3.4.1",
     "vitest": "^0.30.1"
   }
 }

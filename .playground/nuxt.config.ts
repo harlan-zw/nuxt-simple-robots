@@ -1,14 +1,12 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { resolve } from 'pathe'
+import Module from '../src/module'
 
 export default defineNuxtConfig({
-  alias: {
-    'nuxt-simple-robots': resolve(__dirname, '../src/module'),
-  },
   modules: [
-    'nuxt-simple-robots',
+    Module,
   ],
   nitro: {
+    plugins: ['plugins/robots.ts'],
     prerender: {
       crawlLinks: true,
       routes: [
@@ -20,9 +18,8 @@ export default defineNuxtConfig({
     siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://example.com',
   },
   robots: {
-    indexable: true,
     disallow: '/hidden/',
-    sitemap: '/sitemap.xml'
+    sitemap: '/sitemap.xml',
   },
   routeRules: {
     '/secret/**': {
@@ -32,6 +29,9 @@ export default defineNuxtConfig({
     '/secret/visible': {
       // index: true,
       robots: 'index, follow',
+    },
+    '/excluded/*': {
+      index: false,
     }
   }
 })

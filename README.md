@@ -18,7 +18,7 @@ Simply manage the robots crawling your Nuxt 3 app.
 <tbody>
 <td align="center">
 <img width="800" height="0" /><br>
-<i>Status:</i> Stable</b> <br>
+<i>Status:</i> <a href="https://github.com/harlan-zw/nuxt-simple-robots/releases/tag/v2.0.0">v2 Released 🎉</a></b> <br>
 <sup> Please report any issues 🐛</sup><br>
 <sub>Made possible by my <a href="https://github.com/sponsors/harlan-zw">Sponsor Program 💖</a><br> Follow me <a href="https://twitter.com/harlan_zw">@harlan_zw</a> 🐦 • Join <a href="https://discord.gg/275MBUBvgP">Discord</a> for help</sub><br>
 <img width="800" height="0" />
@@ -33,9 +33,15 @@ Simply manage the robots crawling your Nuxt 3 app.
 
 - 🤖 Creates best practice robot data
 - 🗿 Adds `X-Robots-Tag` header, robot meta tag and robots.txt
-- 🔄 Configure using route rules
+- 🔄 Configure using route rules and hooks
 - 🔒 Disables non-production environments from being crawled automatically
 - Best practice default config
+
+### Zero Config Integrations
+
+- [`nuxt-simple-robots`](https://github.com/harlan-zw/nuxt-simple-robots)
+
+Will automatically add sitemap entries.
 
 ## Install
 
@@ -58,9 +64,33 @@ export default defineNuxtConfig({
 })
 ```
 
-### Configure route indexing
+### Set Site URL (required when prerendering)
+
+For prerendered robots.txt that use sitemaps, you'll need to provide the URL of your site.
+
+```ts
+export default defineNuxtConfig({
+  // Recommended 
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://example.com',
+    }
+  },
+  // OR 
+  robots: {
+    siteUrl: 'https://example.com',
+  },
+})
+```
+
+### Using route rules
 
 Using route rules, you can configure how your routes are indexed by search engines.
+
+You can provide the following rules:
+
+- `index: false` - Will disable the route from being indexed using the `robotsDisabledValue`config _(default `noindex, nofollow`)_
+- `robots: <string>` - Will add robots the provided string as the robots rule
 
 ```ts
 export default defineNuxtConfig({
@@ -75,12 +105,16 @@ export default defineNuxtConfig({
 })
 ```
 
-## Injecting Meta Tags (optional)
+The rules are applied using the following logic:
+- `X-Robots-Tag` header - SSR only
+- `<meta name="robots">` - When using the `defineRobotMeta` or `RobotMeta` composable or component
+- `/robots.txt` disallow entry - When `disallowNonIndexableRoutes` is enabled
 
-By default, only the robots.txt and HTTP headers will be used to control indexing. If you want to add a meta tag to your page as well,
-you can use the composable or the component provided.
+## Meta Tags
 
-This shouldn't be necessary, but it's useful if you want to be extra sure that your page is not indexed and can make debugging easier.
+By default, only the `/robots.txt` and HTTP headers provided by server middleware will be used to control indexing. 
+
+It's recommended for SSG apps or to improve debugging, to add a meta tags to your page as well.
 
 Within your app.vue or a layout:
 
@@ -99,7 +133,7 @@ defineRobotMeta()
 
 ## Module Config
 
-### `host`
+### `siteUrl`
 
 - Type: `string`
 - Default: `process.env.NUXT_PUBLIC_SITE_URL || nuxt.options.runtimeConfig.public?.siteUrl`
@@ -125,6 +159,17 @@ export default defineNuxtConfig({
 - Default: `process.env.NUXT_INDEXABLE || nuxt.options.runtimeConfig.indexable || process.env.NODE_ENV === 'production'`
 
 Whether the site is indexable by search engines.
+
+It's recommended that you use runtime config for this.
+
+```ts
+export default defineNuxtConfig({
+  runtimeConfig: {
+    // can be set with environment variables
+    indexable: process.env.NUXT_INDEXABLE || false,
+  },
+})
+```
 
 ### `disallow`
 
@@ -169,6 +214,53 @@ The value to use when the site is indexable.
 - Required: `false`
 
 The value to use when the site is not indexable.
+
+### `disallowNonIndexableRoutes`
+
+- Type: `boolean`
+- Default: `'false'`
+
+Should route rules which disallow indexing be added to the `/robots.txt` file.
+
+## Nuxt Hooks
+
+### `robots:config`
+
+**Type:** `async (config: ModuleOptions) => void | Promise<void>`
+
+This hook allows you to modify the robots config before it is used to generate the robots.txt and meta tags.
+
+```ts
+export default defineNuxtConfig({
+  hooks: {
+    'robots:config': (config) => {
+      // modify the config
+      config.sitemap = '/sitemap.xml'
+    },
+  },
+})
+```
+
+## Nitro Hooks
+
+### `robots:robots-txt`
+
+**Type:** `async (ctx: { robotsTxt: string }) => void | Promise<void>`
+
+This hook allows you to modify the robots.txt content before it is sent to the client.
+
+```ts
+import { defineNitroPlugin } from 'nitropack/runtime/plugin'
+
+export default defineNitroPlugin((nitroApp) => {
+  if (!process.dev) {
+    nitroApp.hooks.hook('robots:robots-txt', async (ctx) => {
+      // remove comments from robotsTxt in production
+      ctx.robotsTxt = ctx.robotsTxt.replace(/^#.*$/gm, '').trim()
+    })
+  }
+})
+```
 
 ## Sponsors
 

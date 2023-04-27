@@ -1,6 +1,5 @@
 import { addComponent, addImports, addServerHandler, addTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
-import { withBase } from 'ufo'
-import { exposeModuleConfig } from './nuxt-utils'
+import { asArray } from './util'
 
 export interface ModuleOptions {
   /**
@@ -11,8 +10,13 @@ export interface ModuleOptions {
   enabled: boolean
   /**
    * The hostname of your website. Used to generate absolute URLs.
+   * @deprecated use `siteUrl`
    */
-  host: string
+  host?: string
+  /**
+   * The hostname of your website. Used to generate absolute URLs.
+   */
+  siteUrl: string
   indexable: boolean
   /**
    * Path to the sitemap.xml file, if it exists.
@@ -21,13 +25,27 @@ export interface ModuleOptions {
   disallow: string | string[]
   robotsEnabledValue: string
   robotsDisabledValue: string
+  disallowNonIndexableRoutes: boolean
+}
+
+export interface ResolvedModuleOptions extends ModuleOptions {
+  sitemap: string[]
+  disallow: string[]
+}
+
+export interface ModuleHooks {
+  'robots:config': (config: ResolvedModuleOptions) => Promise<void> | void
+}
+
+export interface ModulePublicRuntimeConfig {
+  ['nuxt-simple-robots']: ResolvedModuleOptions
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-simple-robots',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '^3.3.1',
       bridge: false,
     },
     configKey: 'robots',
@@ -40,19 +58,23 @@ export default defineNuxtModule<ModuleOptions>({
       indexable = String(nuxt.options.runtimeConfig.indexable) !== 'false'
     else if (process.env.NODE_ENV !== 'production')
       indexable = false
+    const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || process.env.NUXT_SITE_URL || nuxt.options.runtimeConfig.public?.siteUrl || nuxt.options.runtimeConfig.siteUrl
     return {
       enabled: true,
-      host: process.env.NUXT_PUBLIC_SITE_URL || process.env.NUXT_SITE_URL || nuxt.options.runtimeConfig.public?.siteUrl || nuxt.options.runtimeConfig.siteUrl,
+      siteUrl,
       disallow: [],
       sitemap: [],
       indexable,
       robotsEnabledValue: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       robotsDisabledValue: 'noindex, nofollow',
+      disallowNonIndexableRoutes: false,
     }
   },
   async setup(config, nuxt) {
     if (config.enabled === false)
       return
+    // allow config fallback
+    config.siteUrl = config.siteUrl || config.host!
 
     const { resolve } = createResolver(import.meta.url)
 
@@ -60,25 +82,36 @@ export default defineNuxtModule<ModuleOptions>({
 
     const logger = useLogger('nuxt-simple-robots')
 
-    // validate sitemaps are absolute
-    if (typeof config.sitemap !== 'undefined') {
-      if (typeof config.sitemap === 'string')
-        config.sitemap = [config.sitemap]
-      for (const k in config.sitemap) {
-        const sitemap = config.sitemap[k]
-        if (!sitemap.startsWith('http')) {
-          // infer siteUrl from runtime config
-          if (config.host) {
-            config.sitemap[k] = withBase(sitemap, config.host)
+    nuxt.hook('modules:done', async () => {
+      config.sitemap = asArray(config.sitemap)
+      config.disallow = asArray(config.disallow)
+      // @ts-expect-error runtime type
+      await nuxt.hooks.callHook('robots:config', config)
+
+      config.sitemap = !config.indexable ? [] : [...new Set(config.sitemap)]
+
+      let disallow = config.disallow
+      if (config.disallowNonIndexableRoutes && config.indexable) {
+        // iterate the route rules and add any non indexable rules to disallow
+        Object.entries(nuxt.options.routeRules || {}).forEach(([route, rules]) => {
+          if (rules.index === false || rules.robots?.includes('noindex')) {
+            // single * is supported but ignored
+            disallow.push(route.replaceAll('**', '*'))
           }
-          else {
-            // remove the sitemap entry from config.sitemap
-            config.sitemap.splice(Number(k), 1)
-            logger.error(`Ignoring robots.txt entry ${sitemap}, sitemap must be absolute.\nPlease provide "host" or make the link absolute, for example: https://example.com${sitemap}.`)
-          }
-        }
+        })
       }
-    }
+      if (!config.indexable)
+        disallow = ['/']
+      else if (!disallow.length)
+        disallow.push('')
+      config.disallow = [...new Set(disallow)]
+
+      const hasRelativeSitemaps = config.sitemap.some(sitemap => !sitemap.startsWith('http'))
+      if (hasRelativeSitemaps && !config.siteUrl && nuxt.options._generate)
+        logger.warn('You are prerendering your robots.txt but have not set a siteUrl. This will result in relative sitemap URLs which are not valid.')
+
+      nuxt.options.runtimeConfig.public['nuxt-simple-robots'] = config as ResolvedModuleOptions
+    })
 
     // paths.d.ts
     addTemplate({
@@ -102,12 +135,16 @@ export {}
       references.push({ path: resolve(nuxt.options.buildDir, 'nuxt-simple-robots.d.ts') })
     })
 
-    nuxt.hooks.hook('nitro:init', async (nitro) => {
-      nitro.options.prerender.routes = nitro.options.prerender.routes || []
-      nitro.options.prerender.routes.push('/robots.txt')
-    })
+    // only prerender for `nuxi generate`
+    if (nuxt.options._generate) {
+      nuxt.hooks.hook('nitro:init', async (nitro) => {
+        nitro.options.prerender.routes = nitro.options.prerender.routes || []
+        nitro.options.prerender.routes.push('/robots.txt')
+      })
+    }
 
-    exposeModuleConfig('nuxt-simple-robots', config)
+    // defineRobotMeta is a server-only composable
+    nuxt.options.optimization.treeShake.composables.client['nuxt-simple-robots'] = ['defineRobotMeta']
 
     addImports({
       name: 'defineRobotMeta',
@@ -122,7 +159,7 @@ export {}
     // add robots.txt server handler
     addServerHandler({
       route: '/robots.txt',
-      handler: resolve('./runtime/server/robots-route'),
+      handler: resolve('./runtime/server/robots-txt'),
     })
     // add robots HTTP header handler
     addServerHandler({
