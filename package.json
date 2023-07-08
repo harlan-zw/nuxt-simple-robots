@@ -39,7 +39,7 @@
     "@nuxt/kit": "^3.6.2",
     "defu": "^6.1.2",
     "nuxt-site-config": "^0.8.17",
-    "nuxt-site-config-kit": "^0.8.17",
+    "nuxt-site-config-kit": "^1.0.2",
     "pathe": "^1.1.1",
     "ufo": "^1.1.2"
   },
