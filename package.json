@@ -50,7 +50,7 @@
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "bumpp": "^9.1.1",
     "eslint": "8.47.0",
-    "execa": "^7.2.0",
+    "execa": "^8.0.1",
     "nuxt": "^3.6.5",
     "vitest": "^0.34.1"
   }
