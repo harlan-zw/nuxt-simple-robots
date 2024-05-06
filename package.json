@@ -90,7 +90,7 @@
     "bumpp": "^9.4.0",
     "eslint": "9.1.0",
     "execa": "^8.0.1",
-    "firebase-functions": "^4.9.0",
+    "firebase-functions": "^5.0.1",
     "nuxt": "^3.11.2",
     "typescript": "^5.4.5",
     "unocss": "^0.59.4",
