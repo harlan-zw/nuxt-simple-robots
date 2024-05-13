@@ -89,7 +89,7 @@
     "@vueuse/nuxt": "^10.9.0",
     "bumpp": "^9.4.0",
     "eslint": "9.1.0",
-    "execa": "^8.0.1",
+    "execa": "^9.1.0",
     "firebase-functions": "^4.9.0",
     "nuxt": "^3.11.2",
     "typescript": "^5.4.5",
