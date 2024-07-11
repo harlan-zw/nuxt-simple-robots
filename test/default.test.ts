@@ -15,7 +15,7 @@ await setup({
 describe('default', () => {
   it('basic', async () => {
     expect(await $fetch('/robots.txt')).toMatchInlineSnapshot(`
-      "# START nuxt-simple-robots (indexable)
+      "# START nuxt-robots (indexable)
       User-agent: *
       Allow: /secret/exception
       Disallow: /secret
@@ -24,7 +24,7 @@ describe('default', () => {
       Disallow: /sub/*
 
       Sitemap: https://nuxtseo.com/sitemap.xml
-      # END nuxt-simple-robots"
+      # END nuxt-robots"
     `)
   })
 })

@@ -40,7 +40,7 @@ describe('route rule merging', () => {
     expect(robotsTxt).toContain('Disallow: /index-rule/*')
     expect(robotsTxt).toContain('Disallow: /robots-rule/*')
     expect(robotsTxt).toMatchInlineSnapshot(`
-      "# START nuxt-simple-robots (indexable)
+      "# START nuxt-robots (indexable)
       User-agent: *
       Allow: /secret/exception
       Disallow: /secret
@@ -53,7 +53,7 @@ describe('route rule merging', () => {
       Disallow: /excluded/*
 
       Sitemap: https://nuxtseo.com/sitemap.xml
-      # END nuxt-simple-robots"
+      # END nuxt-robots"
     `)
   })
 })

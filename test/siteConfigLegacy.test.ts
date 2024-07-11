@@ -11,7 +11,7 @@ await setup({
   nuxtConfig: {
     site: {
       indexable: true,
-      url: 'https://nuxt-simple-robots.com',
+      url: 'https://nuxt-robots.com',
     },
     robots: {
       sitemap: [

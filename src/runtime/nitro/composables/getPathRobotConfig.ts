@@ -3,11 +3,11 @@ import { withoutTrailingSlash } from 'ufo'
 import { createNitroRouteRuleMatcher, withoutQuery } from '../kit'
 import { indexableFromGroup, normaliseRobotsRouteRule } from '../../util'
 import { useNitroApp, useRuntimeConfig } from '#imports'
-import { getSiteRobotConfig } from '#internal/nuxt-simple-robots'
+import { getSiteRobotConfig } from '#internal/nuxt-robots'
 
 export function getPathRobotConfig(e: H3Event, options?: { skipSiteIndexable?: boolean, path?: string }) {
   // has already been resolved
-  const { robotsDisabledValue, robotsEnabledValue, usingNuxtContent } = useRuntimeConfig()['nuxt-simple-robots']
+  const { robotsDisabledValue, robotsEnabledValue, usingNuxtContent } = useRuntimeConfig()['nuxt-robots']
   if (!options?.skipSiteIndexable) {
     if (!getSiteRobotConfig(e).indexable) {
       return {

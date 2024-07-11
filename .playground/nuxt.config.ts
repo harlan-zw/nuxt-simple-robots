@@ -24,8 +24,8 @@ export default defineNuxtConfig({
             cwd: resolve(__dirname, '../client'),
           },
           {
-            id: 'nuxt-simple-robots:client',
-            name: 'Nuxt Simple Robots Client Dev',
+            id: 'nuxt-robots:client',
+            name: 'Nuxt Robots Client Dev',
           },
         )
         subprocess.getProcess().stdout?.on('data', (data) => {

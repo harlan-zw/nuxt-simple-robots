@@ -15,6 +15,6 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/__nuxt-simple-robots',
+    baseURL: '/__nuxt-robots',
   },
 })

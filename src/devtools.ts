@@ -13,7 +13,7 @@ export interface ClientFunctions {
   refreshGlobalData: () => void
 }
 
-const DEVTOOLS_UI_ROUTE = '/__nuxt-simple-robots'
+const DEVTOOLS_UI_ROUTE = '/__nuxt-robots'
 const DEVTOOLS_UI_LOCAL_PORT = 3030
 
 export function setupDevToolsUI(options: ModuleOptions, resolve: Resolver['resolve'], nuxt: Nuxt = useNuxt()) {
@@ -47,13 +47,13 @@ export function setupDevToolsUI(options: ModuleOptions, resolve: Resolver['resol
   // wait for DevTools to be initialized
   onDevToolsInitialized(async () => {
     /* const rpc = */
-    extendServerRpc<ClientFunctions, ServerFunctions>('nuxt-simple-robots', {})
+    extendServerRpc<ClientFunctions, ServerFunctions>('nuxt-robots', {})
   })
 
   nuxt.hook('devtools:customTabs', (tabs) => {
     tabs.push({
       // unique identifier
-      name: 'nuxt-simple-robots',
+      name: 'nuxt-robots',
       // title to display in the tab
       title: 'Robots',
       // any icon from Iconify, or a URL to an image

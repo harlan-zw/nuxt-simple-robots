@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-simple-robots",
+  "name": "@nuxtjs/robots",
   "type": "module",
   "version": "4.0.0-rc.20",
   "packageManager": "pnpm@9.4.0",
@@ -9,15 +9,19 @@
     "email": "harlan@harlanzw.com",
     "url": "https://harlanzw.com/"
   },
+  "contributors": [
+    "Ricardo Gobbo de Souza <ricardogobbosouza@yahoo.com.br>",
+    "Harlan Wilton <harlan@harlanzw.com>"
+  ],
   "license": "MIT",
   "funding": "https://github.com/sponsors/harlan-zw",
   "homepage": "https://nuxtseo.com/robots",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/harlan-zw/nuxt-simple-robots.git"
+    "url": "git+https://github.com/nuxt-modules/robots.git"
   },
   "bugs": {
-    "url": "https://github.com/harlan-zw/nuxt-simple-robots/issues"
+    "url": "https://github.com/nuxt-modules/robots/issues"
   },
   "exports": {
     ".": {

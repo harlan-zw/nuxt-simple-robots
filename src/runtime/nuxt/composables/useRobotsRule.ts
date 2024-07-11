@@ -34,7 +34,7 @@ export function useRobotsRule(rule?: MaybeRef<boolean | string>) {
     if (!event || typeof _rule === 'undefined')
       return
     if (typeof _rule === 'boolean' || !_rule) {
-      _rule = _rule ? config['nuxt-simple-robots'].robotsEnabledValue : config['nuxt-simple-robots'].robotsDisabledValue
+      _rule = _rule ? config['nuxt-robots'].robotsEnabledValue : config['nuxt-robots'].robotsDisabledValue
     }
     event.context.robots.rule = _rule
     setHeader(event, 'X-Robots-Tag', _rule)
