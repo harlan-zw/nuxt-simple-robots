@@ -20,7 +20,7 @@ await setup({
 describe('mergeWithRobotsTxtPath', () => {
   it('basic', async () => {
     expect(await $fetch('/robots.txt')).toMatchInlineSnapshot(`
-      "# START nuxt-simple-robots (indexable)
+      "# START nuxt-robots (indexable)
       User-agent: *
       Allow: /secret/exception
       Disallow: /secret
@@ -29,7 +29,7 @@ describe('mergeWithRobotsTxtPath', () => {
       Disallow: /sub/*
 
       Sitemap: https://nuxtseo.com/sitemap.xml
-      # END nuxt-simple-robots"
+      # END nuxt-robots"
     `)
 
     // hit one of the disallowed routes, check the robots header

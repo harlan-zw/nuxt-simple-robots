@@ -9,7 +9,7 @@ await setup({
   nuxtConfig: {
     site: {
       env: 'staging',
-      url: 'https://nuxt-simple-robots.com',
+      url: 'https://nuxt-robots.com',
     },
     robots: {
       sitemap: [

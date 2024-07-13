@@ -135,12 +135,12 @@ export interface ModuleHooks {
 }
 
 export interface ModulePublicRuntimeConfig {
-  ['nuxt-simple-robots']: ResolvedModuleOptions
+  ['nuxt-robots']: ResolvedModuleOptions
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-simple-robots',
+    name: '@nuxtjs/robots',
     compatibility: {
       nuxt: '>=3.6.1',
       bridge: false,
@@ -345,7 +345,7 @@ export default defineNuxtModule<ModuleOptions>({
         }
       }
 
-      nuxt.options.runtimeConfig['nuxt-simple-robots'] = {
+      nuxt.options.runtimeConfig['nuxt-robots'] = {
         version: version || '',
         usingNuxtContent: hasNuxtModule('@nuxt/content'),
         debug: config.debug,
@@ -357,9 +357,11 @@ export default defineNuxtModule<ModuleOptions>({
         // @ts-expect-error untyped
         cacheControl: config.cacheControl,
       }
+      // TODO deprecated, backwards compatiblity
+      nuxt.options.runtimeConfig['nuxt-simple-robots'] = nuxt.options.runtimeConfig['nuxt-robots']
     })
 
-    extendTypes('nuxt-simple-robots', ({ typesPath }) => {
+    extendTypes('nuxt-robots', ({ typesPath }) => {
       return `
 declare module 'nitropack' {
   interface NitroApp {
@@ -417,7 +419,7 @@ declare module 'h3' {
     }
 
     // defineRobotMeta is a server-only composable
-    nuxt.options.optimization.treeShake.composables.client['nuxt-simple-robots'] = ['defineRobotMeta']
+    nuxt.options.optimization.treeShake.composables.client['nuxt-robots'] = ['defineRobotMeta']
 
     addImports({
       name: 'defineRobotMeta',
@@ -467,7 +469,7 @@ declare module 'h3' {
       setupDevToolsUI(config, resolve)
 
     const siteConfigPreset: Preset = {
-      from: '#internal/nuxt-simple-robots',
+      from: '#internal/nuxt-robots',
       imports: [
         'getPathRobotConfig',
         'getSiteRobotConfig',
@@ -478,6 +480,8 @@ declare module 'h3' {
     nuxt.options.nitro.imports.presets = nuxt.options.nitro.imports.presets || []
     nuxt.options.nitro.imports.presets.push(siteConfigPreset)
     nuxt.options.nitro.alias = nuxt.options.nitro.alias || {}
+    // TODO deprecated, avoid breaking changes for now
     nuxt.options.nitro.alias['#internal/nuxt-simple-robots'] = resolve('./runtime/nitro/composables')
+    nuxt.options.nitro.alias['#internal/nuxt-robots'] = resolve('./runtime/nitro/composables')
   },
 })

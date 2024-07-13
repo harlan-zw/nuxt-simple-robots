@@ -1,3 +1,3 @@
 import { useLogger } from '@nuxt/kit'
 
-export const logger = useLogger('nuxt-simple-robots')
+export const logger = useLogger('@nuxt/robots')

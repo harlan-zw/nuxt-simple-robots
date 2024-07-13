@@ -8,7 +8,7 @@ export function getSiteRobotConfig(e: H3Event): { indexable: boolean, hints: str
 // move towards deprecating indexable
   const query = getQuery(e)
   const hints: string[] = []
-  const { groups, debug } = useRuntimeConfig(e)['nuxt-simple-robots']
+  const { groups, debug } = useRuntimeConfig(e)['nuxt-robots']
   let indexable = getSiteIndexable(e)
   // allow previewing with ?mockProductionEnv
   const queryIndexableEnabled = String(query.mockProductionEnv) === 'true' || query.mockProductionEnv === ''
@@ -18,8 +18,8 @@ export function getSiteRobotConfig(e: H3Event): { indexable: boolean, hints: str
       indexable = true
       hints.push('You are mocking a production enviroment with ?mockProductionEnv query.')
     }
-    else if (!indexable && _context.indexable === 'nuxt-simple-robots:config') {
-      hints.push('You are blocking indexing with your nuxt-simple-robots config.')
+    else if (!indexable && _context.indexable === 'nuxt-robots:config') {
+      hints.push('You are blocking indexing with your Nuxt Robots config.')
     }
     else if (!queryIndexableEnabled && (!_context.indexable)) {
       hints.push(`Indexing is blocked in development. You can mock a production environment with ?mockProductionEnv query.`)

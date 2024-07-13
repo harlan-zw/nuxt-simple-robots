@@ -4,12 +4,12 @@ import { resolveRobotsTxtContext } from '../util'
 import type { HookRobotsConfigContext, HookRobotsTxtContext } from '../../types'
 import { useNitroApp, useRuntimeConfig } from '#imports'
 import { withSiteUrl } from '#internal/nuxt-site-config'
-import { getSiteRobotConfig } from '#internal/nuxt-simple-robots'
+import { getSiteRobotConfig } from '#internal/nuxt-robots'
 
 export default defineEventHandler(async (e) => {
   const nitro = useNitroApp()
   const { indexable, hints } = getSiteRobotConfig(e)
-  const { credits, usingNuxtContent, cacheControl } = useRuntimeConfig(e)['nuxt-simple-robots']
+  const { credits, usingNuxtContent, cacheControl } = useRuntimeConfig(e)['nuxt-robots']
   // move towards deprecating indexable
   let robotsTxtCtx: Omit<HookRobotsConfigContext, 'context' | 'event'> = {
     sitemaps: [],
@@ -53,9 +53,9 @@ export default defineEventHandler(async (e) => {
   }
   if (credits) {
     robotsTxt = [
-      `# START nuxt-simple-robots (${indexable ? 'indexable' : 'indexing disabled'})`,
+      `# START nuxt-robots (${indexable ? 'indexable' : 'indexing disabled'})`,
       robotsTxt,
-      '# END nuxt-simple-robots',
+      '# END nuxt-robots',
     ].filter(Boolean).join('\n')
   }
 

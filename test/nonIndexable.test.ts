@@ -24,11 +24,11 @@ await setup({
 describe('nonIndexable', () => {
   it('basic', async () => {
     expect(await $fetch('/robots.txt')).toMatchInlineSnapshot(`
-      "# START nuxt-simple-robots (indexing disabled)
+      "# START nuxt-robots (indexing disabled)
       User-agent: *
       Disallow: /
 
-      # END nuxt-simple-robots"
+      # END nuxt-robots"
     `)
   })
 })

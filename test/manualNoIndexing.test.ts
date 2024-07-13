@@ -13,7 +13,7 @@ await setup({
   nuxtConfig: {
     site: {
       debug: true,
-      url: 'https://nuxt-simple-robots.com',
+      url: 'https://nuxt-robots.com',
     },
     robots: {
       disallow: ['/'],
@@ -27,11 +27,11 @@ describe('manualNoIndexing', () => {
     // the site.url should be appended
     // site.indexable should be honoured
     expect(robotsTxt).toMatchInlineSnapshot(`
-      "# START nuxt-simple-robots (indexing disabled)
+      "# START nuxt-robots (indexing disabled)
       User-agent: *
       Disallow: /
 
-      # END nuxt-simple-robots"
+      # END nuxt-robots"
     `)
   })
 })

@@ -28,7 +28,7 @@ onDevtoolsClientConnected(async (client) => {
   })
   devtools.value = client.devtools
   devtoolsClient.value = client
-  client.devtools.extendClientRpc<ServerFunctions, ClientFunctions>('nuxt-simple-robots', {
+  client.devtools.extendClientRpc<ServerFunctions, ClientFunctions>('nuxt-robots', {
     refreshRouteData(path) {
       // if path matches
       if (devtoolsClient.value?.host.nuxt.vueApp.config?.globalProperties?.$route.matched[0].components?.default.__file.includes(path))

@@ -23,7 +23,7 @@ await setup({
 describe('i18n', () => {
   it('basic', async () => {
     expect(await $fetch('/robots.txt')).toMatchInlineSnapshot(`
-      "# START nuxt-simple-robots (indexable)
+      "# START nuxt-robots (indexable)
       User-agent: *
       Disallow: /secret
       Disallow: /en/secret
@@ -34,7 +34,7 @@ describe('i18n', () => {
       Disallow: /es/admin
       Disallow: /fr/admin
 
-      # END nuxt-simple-robots"
+      # END nuxt-robots"
     `)
   })
 })
