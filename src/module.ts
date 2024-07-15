@@ -172,6 +172,8 @@ export default defineNuxtModule<ModuleOptions>({
       return
     }
 
+    logger.warn('The `nuxt-simple-robots` has been merged with `@nuxtjs/robots`, please migrate https://nuxtseo.com/robots/releases/v4.')
+
     const resolvedAutoI18n = typeof config.autoI18n === 'boolean' ? false : (config.autoI18n || await resolveI18nConfig())
 
     if (config.blockNonSeoBots) {
