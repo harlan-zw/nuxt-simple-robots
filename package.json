@@ -1,5 +1,5 @@
 {
-  "name": "@nuxtjs/robots",
+  "name": "nuxt-simple-robots",
   "type": "module",
   "version": "4.0.0-rc.20",
   "packageManager": "pnpm@9.5.0",
