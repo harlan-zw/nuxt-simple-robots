@@ -1,4 +1,4 @@
-⚠️ `nuxt-simple-robots` has been merged into `@nuxtjs/robots`, please follow the [migration guide](https://nuxtseo.com/robots/releases/v4) to update your configuration.
+⚠️ `nuxt-simple-robots` has been merged into [@nuxtjs/robots](https://github.com/nuxt-modules/robots), please follow the [migration guide](https://nuxtseo.com/robots/releases/v4) to update your configuration.
 
 ## Sponsors
 
