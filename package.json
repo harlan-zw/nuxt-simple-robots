@@ -89,7 +89,7 @@
     "@unocss/preset-icons": "^0.63.0",
     "@unocss/preset-uno": "^0.63.0",
     "@unocss/runtime": "^0.63.0",
-    "@vueuse/nuxt": "^10.11.1",
+    "@vueuse/nuxt": "^11.1.0",
     "bumpp": "^9.6.1",
     "eslint": "^9.11.1",
     "execa": "^9.4.0",
