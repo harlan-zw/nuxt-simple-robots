@@ -63,7 +63,7 @@
     "flatted": "^3.3.1",
     "floating-vue": "^5.2.2",
     "nuxt-site-config": "^2.2.21",
-    "nuxt-site-config-kit": "^2.2.21",
+    "nuxt-site-config-kit": "^3.0.6",
     "pathe": "^1.1.2",
     "pkg-types": "^1.2.1",
     "shiki": "1.22.2",
