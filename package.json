@@ -62,7 +62,7 @@
     "defu": "^6.1.4",
     "flatted": "^3.3.1",
     "floating-vue": "^5.2.2",
-    "nuxt-site-config": "^2.2.21",
+    "nuxt-site-config": "^3.0.6",
     "nuxt-site-config-kit": "^2.2.21",
     "pathe": "^1.1.2",
     "pkg-types": "^1.2.1",
