@@ -30,8 +30,8 @@ importers:
         specifier: ^2.2.21
         version: 2.2.21(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.10(@types/node@20.14.10)(terser@5.31.1))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
       nuxt-site-config-kit:
-        specifier: ^2.2.21
-        version: 2.2.21(magicast@0.3.5)(rollup@4.24.4)(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
+        specifier: ^3.0.6
+        version: 3.0.6(magicast@0.3.5)(rollup@4.24.4)(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
       pathe:
         specifier: ^1.1.2
         version: 1.1.2
@@ -5455,6 +5455,9 @@ packages:
   nuxt-site-config-kit@2.2.21:
     resolution: {integrity: sha512-xO41Zf6bXlA9Zvj+fX7ftD+ITee4LfrkzHj85Gt4FpgwonFxzGO5pMBtAqIxXKJwuyT1z2wVAixHI+ov66wV0w==}
 
+  nuxt-site-config-kit@3.0.6:
+    resolution: {integrity: sha512-QBOFzAIo+D02avFQQ7gNlRyA372/PQlgW2IjL2nttvjfHapqYbvP6tIP55soL+1+D8YvF/bGZgS+vJtfQhroUg==}
+
   nuxt-site-config@2.2.21:
     resolution: {integrity: sha512-VsHpR4socGrlRPjyg2F8JqbirBqH4yCkTQa60fj7saqKMPW1VcRROn21OJzfTHDpjeD+KayRdR3FB0Jxk9WFNA==}
 
@@ -6318,6 +6321,11 @@ packages:
 
   site-config-stack@2.2.21:
     resolution: {integrity: sha512-HRIgIgZAEK8XFYYepL/KtygJgmcUPdgxBJl0ueSrA12lNo2tk5aMkSuA2Oz/k6chnTbEwd6ESMYCs6opgYKNHw==}
+    peerDependencies:
+      vue: ^3
+
+  site-config-stack@3.0.6:
+    resolution: {integrity: sha512-lqNI6Xvbwf4NBFqGJ1gNUIe12SOYw8YOuhrbl52JTVwBgtZZzXYh/ZQAwBHwXC7pxULvfIPUd8AJA35WtqU5YA==}
     peerDependencies:
       vue: ^3
 
@@ -10751,10 +10759,6 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  acorn-import-attributes@1.9.5(acorn@8.12.1):
-    dependencies:
-      acorn: 8.12.1
-
   acorn-import-attributes@1.9.5(acorn@8.14.0):
     dependencies:
       acorn: 8.14.0
@@ -14179,6 +14183,21 @@ snapshots:
       - vue
       - webpack-sources
 
+  nuxt-site-config-kit@3.0.6(magicast@0.3.5)(rollup@4.24.4)(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3):
+    dependencies:
+      '@nuxt/kit': 3.14.159(magicast@0.3.5)(rollup@4.24.4)(webpack-sources@3.2.3)
+      '@nuxt/schema': 3.14.159(magicast@0.3.5)(rollup@4.24.4)(webpack-sources@3.2.3)
+      pkg-types: 1.2.1
+      site-config-stack: 3.0.6(vue@3.5.12(typescript@5.6.3))
+      std-env: 3.7.0
+      ufo: 1.5.4
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
+      - vue
+      - webpack-sources
+
   nuxt-site-config@2.2.21(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.10(@types/node@20.14.10)(terser@5.31.1))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3):
     dependencies:
       '@nuxt/devtools-kit': 1.6.0(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.10(@types/node@20.14.10)(terser@5.31.1))(webpack-sources@3.2.3)
@@ -15367,6 +15386,11 @@ snapshots:
       ufo: 1.5.4
       vue: 3.5.12(typescript@5.6.3)
 
+  site-config-stack@3.0.6(vue@3.5.12(typescript@5.6.3)):
+    dependencies:
+      ufo: 1.5.4
+      vue: 3.5.12(typescript@5.6.3)
+
   skin-tone@2.0.0:
     dependencies:
       unicode-emoji-modifier-base: 1.0.0
@@ -16503,9 +16527,9 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
       '@webassemblyjs/wasm-parser': 1.12.1
-      acorn: 8.12.1
-      acorn-import-attributes: 1.9.5(acorn@8.12.1)
-      browserslist: 4.23.3
+      acorn: 8.14.0
+      acorn-import-attributes: 1.9.5(acorn@8.14.0)
+      browserslist: 4.24.2
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.17.0
       es-module-lexer: 1.5.4
